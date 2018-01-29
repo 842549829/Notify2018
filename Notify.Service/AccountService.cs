@@ -73,7 +73,7 @@ namespace Notify.Service
                 CompanyValidate.ValdateCompany(account.Company.Value);
 
                 // 登录
-                result = account.Login(loginInfo.LoginPassword, 1);
+                result = account.Login(loginInfo.LoginPassword, loginInfo.SysType);
             }
             catch (CustomException ex)
             {

@@ -14,14 +14,9 @@ namespace Notify.Model.Transfer
         public Result Result { get; set; }
 
         /// <summary>
-        /// 菜单权限
-        /// </summary>
-        public IEnumerable<TMenu> Menu { get; set; }
-
-        /// <summary>
         /// 权限
         /// </summary>
-        Dictionary<int, IEnumerable<TMenu>> Permission { get; set; }
+        public Dictionary<int, IEnumerable<TMenu>> Permission { get; set; }
 
         /// <summary>
         /// 用户信息

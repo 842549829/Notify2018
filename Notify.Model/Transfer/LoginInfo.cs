@@ -19,5 +19,10 @@
         /// 登录IP
         /// </summary>
         public string ClinetIp { get; set; }
+
+        /// <summary>
+        /// 登录系统类型
+        /// </summary>
+        public int SysType { get; set; }
     }
 }

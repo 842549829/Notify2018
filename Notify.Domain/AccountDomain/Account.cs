@@ -134,11 +134,6 @@ namespace Notify.Domain.AccountDomain
         }
 
         /// <summary>
-        /// 权限
-        /// </summary>
-        public Dictionary<int, PermissionCollection> Permission { get; set; }
-
-        /// <summary>
         /// 登录
         /// </summary>
         /// <param name="type">系统类型</param>
@@ -146,25 +141,23 @@ namespace Notify.Domain.AccountDomain
         public LoginResult Login(string password, int type)
         {
             this.ValidateLogin(password);
-
-            // 加载菜单
             LoginResult result = new LoginResult();
             var permissionCollection = PermissionService.QueryPermissionOfUser(this, type);
             result.Account = this.ToTAccount();
-            result.Menu = permissionCollection.Menus;
+            result.Company = this.Company.Value.ToTCompany();
             result.Result.IsSucceed = true;
             result.Result.Message = "登录成功";
-            if (this.Permission == null)
+            if (result.Permission == null)
             {
-                this.Permission = new Dictionary<int, PermissionCollection>();
+                result.Permission = new Dictionary<int, IEnumerable<TMenu>>();
             }
-            if (this.Permission.ContainsKey(type))
+            if (result.Permission.ContainsKey(type))
             {
-                this.Permission[type] = permissionCollection;
+                result.Permission[type] = permissionCollection.Menus;
             }
             else
             {
-                this.Permission.Add(type, permissionCollection);
+                result.Permission.Add(type, permissionCollection.Menus);
             }
             return result;
         }

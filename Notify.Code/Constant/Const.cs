@@ -19,6 +19,11 @@ namespace Notify.Code.Constant
         public const string MenuSessionKey = "MenuSessionKey";
 
         /// <summary>
+        /// 公司SessionKey
+        /// </summary>
+        public const string CompanySessionKey = "CompanySessionKey";
+
+        /// <summary>
         /// 菜单EsayUIMenuSessionKey
         /// </summary>
         public const string EsayUIMenuSessionKey = "EsayUIMenuSessionKey";

@@ -95,16 +95,18 @@ namespace Notify.Controller.Base
         /// <returns>登录结果</returns>
         private static Result Logon(string userName, string password)
         {
+            int type = 0;
             var ipAddress = HttpContext.Current.Request.UserHostAddress;
-            var loginInfo = CreateLoginInfo(userName, password, ipAddress);
+            var loginInfo = CreateLoginInfo(userName, password, ipAddress, type);
             var result = AccountService.Login(loginInfo);
             if (result.Result.IsSucceed)
             {
-                if (result.Menu.Any())
+                if (result.Permission != null && result.Permission.ContainsKey(type) && result.Permission[type].Any())
                 {
                     HttpContext.Current.Session[Const.UserSessionKey] = result.Account;
-                    HttpContext.Current.Session[Const.MenuSessionKey] = result.Menu;
-                }
+                    HttpContext.Current.Session[Const.CompanySessionKey] = result.Company;
+                    HttpContext.Current.Session[Const.MenuSessionKey] = result.Permission[type];
+                }  
                 else
                 {
                     result.Result.IsSucceed = false;
@@ -121,14 +123,16 @@ namespace Notify.Controller.Base
         /// <param name="userName">登录名</param>
         /// <param name="password">登录密码</param>
         /// <param name="ipAddress">IP地址</param>
+        /// <param name="type">系统类型</param>
         /// <returns>登录信息</returns>
-        private static LoginInfo CreateLoginInfo(string userName, string password, string ipAddress)
+        private static LoginInfo CreateLoginInfo(string userName, string password, string ipAddress, int type)
         {
             var loginInfo = new LoginInfo
             {
                 AccountNo = userName,
                 LoginPassword = password,
-                ClinetIp = ipAddress
+                ClinetIp = ipAddress,
+                SysType = type
             };
 
             return loginInfo;

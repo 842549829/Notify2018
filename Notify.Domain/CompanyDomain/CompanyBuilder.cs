@@ -35,22 +35,24 @@ namespace Notify.Domain.CompanyDomain
         /// <summary>
         /// 对象转化
         /// </summary>
-        /// <param name="mAccount">MAccount</param>
-        /// <returns>TAccount</returns>
-        public static TAccount ToTAccount(this MAccount mAccount)
+        /// <param name="company">Company</param>
+        /// <returns>TCompany</returns>
+        public static TCompany ToTCompany(this Company company)
         {
-            var account = new TAccount
+            var tCompany = new TCompany
             {
-                Id = mAccount.Id,
-                AccountName = mAccount.AccountName,
-                AccountNo = mAccount.AccountNo,
-                Mail = mAccount.Mail,
-                Mobile = mAccount.Mobile,
-                CreateTime = mAccount.CreateTime,
-                IsAdmin = mAccount.IsAdmin,
-                Status = mAccount.Status
+                CompanyId = company.Key,
+                CompanyAccountNo = company.CompanyAccountNo,
+                CompanyAddress = company.CompanyAddress,
+                CompanyName = company.CompanyName,
+                CompanyStatus = company.CompanyStatus,
+                ContactName = company.ContactName,
+                ContactPhone = company.ContactPhone,
+                ModifyTime = company.ModifyTime,
+                ParenttCompanyId = company.ParenttCompanyId,
+                CreateTime = company.CreateTime
             };
-            return account;
+            return tCompany;
         }
 
         /// <summary>
