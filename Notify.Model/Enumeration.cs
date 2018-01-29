@@ -41,4 +41,22 @@ namespace Notify.Model
         [Description("启用")]
         Enabled = 1
     }
+
+    /// <summary>
+    /// 公司状态
+    /// </summary>
+    public enum CompanyStatus
+    {
+        /// <summary>
+        /// 禁用
+        /// </summary>
+        [Description("禁用")]
+        Disable = 0,
+
+        /// <summary>
+        /// 启用
+        /// </summary>
+        [Description("启用")]
+        Enabled = 1
+    }
 }

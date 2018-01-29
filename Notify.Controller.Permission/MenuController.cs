@@ -25,11 +25,12 @@ namespace Notify.Controller.Permission
         /// <summary>
         /// 查询菜单列表
         /// </summary>
+        /// <param name="type">菜单类型</param>
         /// <returns>结果</returns>
         [AcceptVerbs("POST")]
-        public JsonResult QueryMenuList()
+        public JsonResult QueryMenuList(int type)
         {
-            var data = MenuService.QueryZtreeMenus();
+            var data = MenuService.QueryZtreeMenus(type);
             return this.Json(data);
         }
 

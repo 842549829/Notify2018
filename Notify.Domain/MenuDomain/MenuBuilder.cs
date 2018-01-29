@@ -218,58 +218,5 @@ namespace Notify.Domain.MenuDomain
         {
             return menu.Select(ToMMenu);
         }
-
-        /// <summary>
-        /// 对象转化
-        /// </summary>
-        /// <param name="menus">MMenu</param>
-        /// <returns>EsayUIMenu</returns>
-        public static IEnumerable<EsayUIMenu> ToEsayUIMenus(this IEnumerable<MMenu> menus)
-        {
-            var mMenus = menus as MMenu[] ?? menus.ToArray();
-            var drList = mMenus.Where(item => item.ParentId == Guid.Empty).Select(item => item.Id);
-            var enumerable = drList as Guid[] ?? drList.ToArray();
-            var drData = enumerable.Any() ? mMenus.Where(item => enumerable.Contains(item.ParentId)) : mMenus.Where(item => item.ParentId == MenuService.QueryDefaultParentId());
-            List<EsayUIMenu> rootNode = new List<EsayUIMenu>();
-            foreach (var item in drData)
-            {
-                EsayUIMenu esayUIMenu = new EsayUIMenu
-                {
-                    menuid = item.Id,
-                    menuname = item.Title,
-                    icon = item.Icon,
-                    url = item.Url
-                };
-                esayUIMenu.menus = CreateChildTree(mMenus, esayUIMenu);
-                rootNode.Add(esayUIMenu);
-            }
-            return rootNode;
-        }
-
-        /// <summary>
-        /// 递归菜单
-        /// </summary>
-        /// <param name="menus">菜单集合</param>
-        /// <param name="menu">父级菜单</param>
-        /// <returns>结果</returns>
-        private static IEnumerable<EsayUIMenu> CreateChildTree(IEnumerable<MMenu> menus, EsayUIMenu menu)
-        {
-            List<EsayUIMenu> nodeList = new List<EsayUIMenu>();
-            var mMenus = menus as MMenu[] ?? menus.ToArray();
-            var children = mMenus.Where(item => item.ParentId == menu.menuid);
-            foreach (var item in children)
-            {
-                EsayUIMenu node = new EsayUIMenu
-                {
-                    menuid = item.Id,
-                    menuname = item.Title,
-                    url = item.Url,
-                    icon = item.Icon
-                };
-                node.menus = CreateChildTree(mMenus, node);
-                nodeList.Add(node);
-            }
-            return nodeList;
-        }
     }
 }

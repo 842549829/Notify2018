@@ -122,7 +122,7 @@ namespace Notify.Code.Mail
             }
             catch (System.Exception ex)
             {
-                throw new System.Exception("系统繁忙,发送失败!");
+                throw new System.Exception(ex.Message + "系统繁忙,发送失败!");
             }
             finally
             {

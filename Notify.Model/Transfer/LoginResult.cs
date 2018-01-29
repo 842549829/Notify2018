@@ -6,12 +6,12 @@ namespace Notify.Model.Transfer
     /// <summary>
     /// 登录结果
     /// </summary>
-    public class LoginResult : Result
+    public class LoginResult 
     {
         /// <summary>
-        /// 菜单(页面菜单展示加载)
+        /// 结果
         /// </summary>
-        public IEnumerable<EsayUIMenu> EsayUiMenu { get; set; }
+        public Result Result { get; set; }
 
         /// <summary>
         /// 菜单权限
@@ -19,8 +19,18 @@ namespace Notify.Model.Transfer
         public IEnumerable<TMenu> Menu { get; set; }
 
         /// <summary>
-        /// 登录账户信息
+        /// 权限
+        /// </summary>
+        Dictionary<int, IEnumerable<TMenu>> Permission { get; set; }
+
+        /// <summary>
+        /// 用户信息
         /// </summary>
         public TAccount Account { get; set; }
+
+        /// <summary>
+        /// 公司信息
+        /// </summary>
+        public TCompany Company { get; set; }
     }
 }

@@ -98,22 +98,21 @@ namespace Notify.Controller.Base
             var ipAddress = HttpContext.Current.Request.UserHostAddress;
             var loginInfo = CreateLoginInfo(userName, password, ipAddress);
             var result = AccountService.Login(loginInfo);
-            if (result.IsSucceed)
+            if (result.Result.IsSucceed)
             {
                 if (result.Menu.Any())
                 {
                     HttpContext.Current.Session[Const.UserSessionKey] = result.Account;
                     HttpContext.Current.Session[Const.MenuSessionKey] = result.Menu;
-                    HttpContext.Current.Session[Const.EsayUIMenuSessionKey] = result.EsayUiMenu;
                 }
                 else
                 {
-                    result.IsSucceed = false;
-                    result.Message = "无访问权限";
+                    result.Result.IsSucceed = false;
+                    result.Result.Message = "无访问权限";
                 }
             }
 
-            return result;
+            return result.Result;
         }
 
         /// <summary>

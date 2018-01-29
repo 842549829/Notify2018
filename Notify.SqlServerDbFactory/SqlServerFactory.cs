@@ -119,5 +119,24 @@ namespace Notify.SqlServerDbFactory
         {
             return new RoleUserRelationshipRepository(unit, null);
         }
+
+        /// <summary>
+        /// 创建公司角色关系仓储
+        /// </summary>
+        /// <returns>用户角色关系仓储</returns>
+        public override ICompanyRepository CreateICompanyRepository()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        /// <summary>
+        /// 创建公司角色关系仓储
+        /// </summary>
+        /// <param name="unit">工作单元</param>
+        /// <returns>用户角色关系仓储</returns>
+        public override ICompanyRepository CreateICompanyRepository(IPowerUnitOfWork unit)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

@@ -1,7 +1,13 @@
 ﻿using Notify.DbCommon.UnitOfWork;
 using Notify.Infrastructure.UnitOfWork;
 using Notify.IRepository;
-using Notify.Repository.Access;
+using Notify.Repository.Mysql;
+using AccountesRepository = Notify.Repository.Access.AccountesRepository;
+using MenuRepository = Notify.Repository.Access.MenuRepository;
+using RolePermissionsRepository = Notify.Repository.Access.RolePermissionsRepository;
+using RoleRepository = Notify.Repository.Access.RoleRepository;
+using RoleUserRelationshipRepository = Notify.Repository.Access.RoleUserRelationshipRepository;
+using VerificationCodeRepository = Notify.Repository.Access.VerificationCodeRepository;
 
 namespace Notify.AccessDbFactory
 {
@@ -118,6 +124,25 @@ namespace Notify.AccessDbFactory
         public override IRoleUserRelationshipRepository CreateIRoleUserRelationshipRepository(IPowerUnitOfWork unit)
         {
             return new RoleUserRelationshipRepository(unit, null);
+        }
+
+        /// <summary>
+        /// 创建公司仓储
+        /// </summary>
+        /// <returns>公司仓储</returns>
+        public override ICompanyRepository CreateICompanyRepository()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        /// <summary>
+        /// 创建公司仓储
+        /// </summary>
+        /// <param name="unit">工作单元</param>
+        /// <returns>公司仓储</returns>
+        public override ICompanyRepository CreateICompanyRepository(IPowerUnitOfWork unit)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

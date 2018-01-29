@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DB\MCompany.cs" />
     <Compile Include="DB\MMenu.cs" />
     <Compile Include="DB\MRole.cs" />
     <Compile Include="DB\MRolePermissions.cs" />
@@ -56,6 +57,7 @@
     <Compile Include="Transfer\RegisterAccount.cs" />
     <Compile Include="Transfer\TAccount.cs" />
     <Compile Include="Transfer\TAccountCondition.cs" />
+    <Compile Include="Transfer\TCompany.cs" />
     <Compile Include="Transfer\TMenu.cs" />
     <Compile Include="Transfer\TRole.cs" />
     <Compile Include="Transfer\TRoleCondition.cs" />

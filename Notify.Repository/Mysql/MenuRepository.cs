@@ -26,54 +26,6 @@ namespace Notify.Repository.Mysql
         }
 
         /// <summary>
-        /// 查询菜单
-        /// </summary>
-        /// <param name="key">主键</param>
-        /// <returns>菜单</returns>
-        public override MMenu Query(Guid key)
-        {
-            this.ClearParameters();
-            const string sql = "SELECT * FROM Menu WHERE Id = @Id;";
-            this.AddParameter("@Id", key);
-            return this.BuildEntityFromSql(sql);
-        }
-
-        /// <summary>
-        /// 查询菜单集合
-        /// </summary>
-        /// <returns>菜单集合</returns>
-        public IEnumerable<MMenu> QueryMenus()
-        {
-            this.ClearParameters();
-            const string sql = "SELECT * FROM Menu ORDER BY Sort;";
-            return this.BuildEntitiesFromSql(sql);
-        }
-
-        /// <summary>
-        /// 菜单查询(根据用户Id查询)
-        /// </summary>
-        /// <returns>结果</returns>
-        public IEnumerable<MMenu> QueryMenus(Guid accountId)
-        {
-            this.ClearParameters();
-            const string sql = "SELECT * FROM Menu WHERE Id IN(SELECT MenuId FROM RolePermissions WHERE RoleId IN(SELECT RoleId FROM RoleUserRelationship WHERE AccountId = @AccountId)) ORDER BY Sort;";
-            this.AddParameter("@AccountId", accountId);
-            return this.BuildEntitiesFromSql(sql);
-        }
-
-        /// <summary>
-        /// 查询父级默认Id
-        /// </summary>
-        /// <returns>父级默认Id</returns>
-        public Guid QueryDefaultParentId()
-        {
-            this.ClearParameters();
-            const string sql = "SELECT * FROM Menu WHERE ParentId = @ParentId";
-            this.AddParameter("@ParentId", Guid.Empty.ToString());
-            return Guid.Parse(this.ExecuteScalar(sql).ToString());
-        }
-
-        /// <summary>
         /// 添加菜单
         /// </summary>
         /// <param name="item">菜单</param>
@@ -167,6 +119,76 @@ namespace Notify.Repository.Mysql
         /// <param name="childCallbacks">子对象委托</param>
         protected override void BuildChildCallbacks(Dictionary<string, AppendChildData> childCallbacks)
         {
+        }
+
+        /// <summary>
+        /// 查询父级默认Id
+        /// </summary>
+        /// <param name="type">菜单类型</param>
+        /// <returns>父级默认Id</returns>
+        public Guid QueryDefaultParentId(int type)
+        {
+            this.ClearParameters();
+            const string sql = "SELECT * FROM Menu WHERE ParentId = @ParentId AND MenuType = @MenuType LIMIT 1;";
+            this.AddParameter("@MenuType", type);
+            this.AddParameter("@ParentId", Guid.Empty.ToString());
+            return Guid.Parse(this.ExecuteScalar(sql).ToString());
+        }
+
+        /// <summary>
+        /// 查询菜单
+        /// </summary>
+        /// <param name="key">主键</param>
+        /// <returns>菜单</returns>
+        public override MMenu Query(Guid key)
+        {
+            this.ClearParameters();
+            const string sql = "SELECT * FROM Menu WHERE Id = @Id;";
+            this.AddParameter("@Id", key);
+            return this.BuildEntityFromSql(sql);
+        }
+
+        /// <summary>
+        /// 查询所有菜单
+        /// </summary>
+        /// <param name="type">菜单类型</param>
+        /// <returns>菜单集合</returns>
+        public IEnumerable<MMenu> QueryMenus(int type)
+        {
+            this.ClearParameters();
+            const string sql = "SELECT * FROM Menu WHERE MenuType = @MenuType ORDER BY Sort;";
+            this.AddParameter("@MenuType", type);
+            return this.BuildEntitiesFromSql(sql);
+        }
+
+        /// <summary>
+        /// 菜单查询(根据用户Id查询)
+        /// </summary>
+        /// <param name="userId">个人用类型</param>
+        /// <param name="type">菜单类型</param>
+        /// <returns>结果</returns>
+        public IEnumerable<MMenu> QueryUserMenus(Guid userId, int type)
+        {
+            this.ClearParameters();
+            const string sql = "SELECT * FROM Menu WHERE MenuType = @MenuType AND Id IN(SELECT MenuId FROM RolePermissions WHERE RoleId IN(SELECT RoleId FROM RoleUserRelationship WHERE UserId = @UserId AND IsDefaultRole = 0)) ORDER BY Sort;";
+            this.AddParameter("@MenuType", type);
+            this.AddParameter("@UserId", userId);
+            return this.BuildEntitiesFromSql(sql);
+        }
+
+        /// <summary>
+        /// 菜单查询(根据用户Id查询默认权限)
+        /// </summary>
+        /// <param name="userId">用户Id</param>
+        /// <param name="type">菜单类型</param>
+        /// <returns>结果</returns>
+        public IEnumerable<MMenu> QueryUserDefaultMenus(Guid userId, int type)
+        {
+            this.ClearParameters();
+            const string sql = "SELECT * FROM Menu WHERE MenuType = @MenuType AND Id IN(SELECT MenuId FROM RolePermissions WHERE RoleId IN(SELECT RoleId FROM RoleUserRelationship WHERE UserId = @UserId AND IsDefaultRole = 1)) ORDER BY Sort;";
+            this.AddParameter("@MenuType", type);
+            this.AddParameter("@UserId", userId);
+            return this.BuildEntitiesFromSql(sql);
         }
     }
 }

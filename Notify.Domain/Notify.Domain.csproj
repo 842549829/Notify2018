@@ -44,6 +44,10 @@
     <Compile Include="AccountDomain\AccountBuilder.cs" />
     <Compile Include="AccountDomain\AccountService.cs" />
     <Compile Include="AccountDomain\AccountValidate.cs" />
+    <Compile Include="CompanyDomain\Company.cs" />
+    <Compile Include="CompanyDomain\CompanyBuilder.cs" />
+    <Compile Include="CompanyDomain\CompanyService.cs" />
+    <Compile Include="CompanyDomain\CompanyValidate.cs" />
     <Compile Include="MenuDomain\MenuBuilder.cs" />
     <Compile Include="MenuDomain\MenuService.cs" />
     <Compile Include="MenuDomain\Resource.cs" />

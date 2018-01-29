@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="IAccountesRepository.cs" />
     <Compile Include="IAddressRepository.cs" />
+    <Compile Include="ICompanyRepository.cs" />
     <Compile Include="IMenuRepository.cs" />
     <Compile Include="IRolePermissionsRepository.cs" />
     <Compile Include="IRoleRepository.cs" />

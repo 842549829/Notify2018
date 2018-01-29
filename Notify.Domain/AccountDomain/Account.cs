@@ -1,12 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using Notify.Code.Exception;
 using Notify.Code.Extension;
+using Notify.Domain.CompanyDomain;
 using Notify.Domain.PermissionDomain;
 using Notify.Domain.VerificationCodeDomain;
 using Notify.Infrastructure.DomainBase;
 using Notify.Model;
 using Notify.Model.Transfer;
 using Notify.Domain.MenuDomain;
+using Notify.Model.DB;
 
 namespace Notify.Domain.AccountDomain
 {
@@ -20,7 +23,7 @@ namespace Notify.Domain.AccountDomain
         /// </summary>
         /// <param name="registerAccount">注册信息</param>
         public Account(RegisterAccount registerAccount)
-            :base(Guid.NewGuid())
+            : base(Guid.NewGuid())
         {
             this.AccountName = registerAccount.AccountName;
             this.AccountNO = registerAccount.AccountNO;
@@ -39,7 +42,7 @@ namespace Notify.Domain.AccountDomain
         /// </summary>
         /// <param name="id">用户Id</param>
         public Account(Guid id)
-            :base(id)
+            : base(id)
         {
         }
 
@@ -94,21 +97,75 @@ namespace Notify.Domain.AccountDomain
         public VerificationCode VerificationCode { get; set; }
 
         /// <summary>
+        /// 公司Id
+        /// </summary>
+        public Guid CompanyId { get; set; }
+
+        /// <summary>
+        /// 公司
+        /// </summary>
+        private Lazy<Company> companyLazy;
+
+        /// <summary>
+        /// 公司
+        /// </summary>
+        public Lazy<Company> Company
+        {
+            get
+            {
+                if (this.companyLazy != null)
+                {
+                    return companyLazy;
+                }
+                this.companyLazy = new Lazy<Company>(() =>
+                {
+                    MCompany mCompany = CompanyService.QueryMCompanyByComapnyId(this.CompanyId);
+                    if (mCompany != null)
+                    {
+                        return mCompany.ToCompany();
+                    }
+                    else
+                    {
+                        return new Company();
+                    }
+                });
+                return this.companyLazy;
+            }
+        }
+
+        /// <summary>
+        /// 权限
+        /// </summary>
+        public Dictionary<int, PermissionCollection> Permission { get; set; }
+
+        /// <summary>
         /// 登录
         /// </summary>
+        /// <param name="type">系统类型</param>
         /// <param name="password">登录密码</param>
-        public LoginResult Login(string password)
+        public LoginResult Login(string password, int type)
         {
             this.ValidateLogin(password);
 
             // 加载菜单
             LoginResult result = new LoginResult();
-            var permissionCollection = PermissionService.QueryPermissionOfUser(this);
+            var permissionCollection = PermissionService.QueryPermissionOfUser(this, type);
             result.Account = this.ToTAccount();
-            result.EsayUiMenu = permissionCollection.m_menus.ToMMenus().ToEsayUIMenus();
             result.Menu = permissionCollection.Menus;
-            result.IsSucceed = true;
-            result.Message = "登录成功";
+            result.Result.IsSucceed = true;
+            result.Result.Message = "登录成功";
+            if (this.Permission == null)
+            {
+                this.Permission = new Dictionary<int, PermissionCollection>();
+            }
+            if (this.Permission.ContainsKey(type))
+            {
+                this.Permission[type] = permissionCollection;
+            }
+            else
+            {
+                this.Permission.Add(type, permissionCollection);
+            }
             return result;
         }
 
@@ -121,6 +178,7 @@ namespace Notify.Domain.AccountDomain
             this.EncryptPassword();
             this.EncryptPayPassword();
             this.VerificationCode.CreateMailCode(this.Mail);
+            this.Company.Value.Register(this, null);
         }
 
         /// <summary>

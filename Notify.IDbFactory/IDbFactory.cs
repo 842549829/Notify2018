@@ -103,5 +103,18 @@ namespace Notify.IDbFactory
         /// <param name="unit">工作单元</param>
         /// <returns>用户角色关系仓储</returns>
         public abstract IRoleUserRelationshipRepository CreateIRoleUserRelationshipRepository(IPowerUnitOfWork unit);
+
+        /// <summary>
+        /// 创建公司仓储
+        /// </summary>
+        /// <returns>公司仓储</returns>
+        public abstract ICompanyRepository CreateICompanyRepository();
+
+        /// <summary>
+        /// 创建公司仓储
+        /// </summary>
+        /// <param name="unit">工作单元</param>
+        /// <returns>公司仓储</returns>
+        public abstract ICompanyRepository CreateICompanyRepository(IPowerUnitOfWork unit);
     }
 }

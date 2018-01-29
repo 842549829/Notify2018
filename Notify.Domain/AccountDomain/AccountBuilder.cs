@@ -30,7 +30,7 @@ namespace Notify.Domain.AccountDomain
                 PayPassword = mAccount.PayPassword,
                 CreateTime = mAccount.CreateTime,
                 IsAdmin = mAccount.IsAdmin,
-                Status = mAccount.Status
+                Status = mAccount.Status,
             };
             return account;
         }

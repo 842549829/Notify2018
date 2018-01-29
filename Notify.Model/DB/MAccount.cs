@@ -59,6 +59,11 @@ namespace Notify.Model.DB
         public AccountStatus Status { get; set; }
 
         /// <summary>
+        /// 公司Id
+        /// </summary>
+        public Guid CompanyId { get; set; }
+
+        /// <summary>
         /// 主键Key
         /// </summary>
         public object Key => this.Id;

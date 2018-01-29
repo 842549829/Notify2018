@@ -47,8 +47,10 @@
     <Compile Include="Access\RoleUserRelationshipRepository.cs" />
     <Compile Include="Access\VerificationCodeRepository.cs" />
     <Compile Include="Factory\AccountesFactory.cs" />
+    <Compile Include="Factory\CompanyFactory.cs" />
     <Compile Include="Factory\MenuFactory.cs" />
     <Compile Include="Mysql\AccountesRepository.cs" />
+    <Compile Include="Mysql\CompanyRepository.cs" />
     <Compile Include="Mysql\MenuRepository.cs" />
     <Compile Include="Mysql\RolePermissionsRepository.cs" />
     <Compile Include="Mysql\RoleRepository.cs" />

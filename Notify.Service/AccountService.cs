@@ -7,6 +7,7 @@ using Notify.Code.Exception;
 using Notify.Code.Mail;
 using Notify.Code.Write;
 using Notify.Domain.AccountDomain;
+using Notify.Domain.CompanyDomain;
 using Notify.Mail;
 using Notify.Model.Transfer;
 
@@ -68,18 +69,21 @@ namespace Notify.Service
                 // 加载用户领域对象
                 var account = mAccount.ToAccount();
 
+                // 验证公司信息
+                CompanyValidate.ValdateCompany(account.Company.Value);
+
                 // 登录
-                result = account.Login(loginInfo.LoginPassword);
+                result = account.Login(loginInfo.LoginPassword, 1);
             }
             catch (CustomException ex)
             {
-                result.IsSucceed = false;
-                result.Message = ex.Message;
+                result.Result.IsSucceed = false;
+                result.Result.Message = ex.Message;
             }
             catch (Exception ex)
             {
-                result.IsSucceed = false;
-                result.Message = Const.LoginFail;
+                result.Result.IsSucceed = false;
+                result.Result.Message = Const.LoginFail;
 
                 // 记录异常日志
                 LogService.WriteLog(ex, Const.Login);
@@ -103,7 +107,7 @@ namespace Notify.Service
                 account.Register();
 
                 // 将领域对象转化成数据库实体对象
-                var mAccount = account.ToMAccount();
+                var mAccount = AccountBuilder.ToMAccount(account);
                 var mVerificationCode = account.VerificationCode.ToMVerificationCode();
 
                 // 通过工资单元持久化数据
@@ -204,7 +208,7 @@ namespace Notify.Service
                 account.AddUser();
 
                 // 将领域对象转化成数据库实体对象
-                var mAccount = account.ToMAccount();
+                var mAccount = AccountBuilder.ToMAccount(account);
 
                 using (var accountesRepository = DbContext.CreateIAccountesRepository())
                 {
@@ -254,7 +258,7 @@ namespace Notify.Service
             {
                 using (var accountesRepository = DbContext.CreateIAccountesRepository())
                 {
-                    var mAccount = userId.ToMAccount();
+                    var mAccount = AccountBuilder.ToMAccount(userId);
                     accountesRepository.Remove(mAccount);
                 }
 

@@ -23,12 +23,13 @@ namespace Notify.Service
         /// <summary>
         /// 菜单查询(Ztree)
         /// </summary>
+        /// <param name="type">菜单类型</param>
         /// <returns>结果</returns>
-        public static IEnumerable<MMenu> QueryMenus()
+        public static IEnumerable<MMenu> QueryMenus(int type)
         {
             using (var menuRepository = DbContext.CreateIMenuRepository())
             {
-                var data = menuRepository.QueryMenus();
+                var data = menuRepository.QueryMenus(type);
                 return data;
             }
         }
@@ -36,20 +37,11 @@ namespace Notify.Service
         /// <summary>
         /// 菜单查询(Ztree)
         /// </summary>
+        /// <param name="type">菜单类型</param>
         /// <returns>结果</returns>
-        public static IEnumerable<ZtreeMenu> QueryZtreeMenus()
+        public static IEnumerable<ZtreeMenu> QueryZtreeMenus(int type)
         {
-            var data = QueryMenus().ToZtreeMenu();
-            return data;
-        }
-
-        /// <summary>
-        /// 菜单查询(EsayUI)
-        /// </summary>
-        /// <returns></returns>
-        public static IEnumerable<EsayUIMenu> QueryEsayUIMenus()
-        {
-            var data = QueryMenus().ToEsayUIMenus();
+            var data = QueryMenus(type).ToZtreeMenu();
             return data;
         }
 

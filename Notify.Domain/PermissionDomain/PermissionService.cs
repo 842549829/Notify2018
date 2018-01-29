@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Notify.DbCommon.Repositroies;
 using Notify.Domain.AccountDomain;
 using Notify.Domain.MenuDomain;
@@ -18,38 +20,74 @@ namespace Notify.Domain.PermissionDomain
         /// <summary>
         /// 查询用户的权限
         /// </summary>
+        /// <param name="type">系统类型</param>
         /// <param name="account">用户</param>
         /// <returns>权限</returns>
-        public static PermissionCollection QueryPermissionOfUser(Account account)
+        public static PermissionCollection QueryPermissionOfUser(Account account, int type)
         {
-            if (account.IsAdmin)
+            // 超级管理员
+            if (account.Company.Value.IsAdminCompany)
             {
-                return QueryPermissionOfCommonUser();
+                return QueryAllPermission(type);
             }
             else
             {
-                return QueryPermissionOfCommonUser(account.Key);
+                // 是否是公司管理员
+                if (account.IsAdmin)
+                {
+                    return QueryCompanyPermission(account.Company.Value.Key, type);
+                }
+                else
+                {
+                    return QueryAccountPermission(account, type);
+                }
             }
         }
 
         /// <summary>
-        /// 查询权限(非管理员)
+        /// 查询权限(员工个人权限)
         /// </summary>
-        /// <param name="accountId">用户Id</param>
+        /// <param name="account">账户信息</param>
+        /// <param name="type">系统类型</param>
         /// <returns>权限</returns>
-        private static PermissionCollection QueryPermissionOfCommonUser(Guid accountId)
+        private static PermissionCollection QueryAccountPermission(Account account, int type)
         {
-            var userPermissionRoles = MenuService.QueryMenus(accountId);
+            IEnumerable<Menu> menus;
+            var userPermission = MenuService.QueryUserMenus(account.Key, type).ToList();
+            if (!userPermission.Any())
+            {
+                // 查询公司默认权限
+                var companyDefaultPermission = MenuService.QueryUserDefaultMenus(account.Company.Value.Key, type).ToList();
+                menus = !companyDefaultPermission.Any() ? new List<Menu>() : companyDefaultPermission;
+            }
+            else
+            {
+                menus = userPermission;
+            }
+            var userPermissions = PermissionCollection.Union(menus);
+            return new PermissionCollection(userPermissions);
+        }
+
+        /// <summary>
+        /// 查询权限(公司权限)
+        /// </summary>
+        /// <param name="companyId">公司Id</param>
+        /// <param name="type">系统类型</param>
+        /// <returns>权限</returns>
+        private static PermissionCollection QueryCompanyPermission(Guid companyId, int type)
+        {
+            var userPermissionRoles = MenuService.QueryUserMenus(companyId, type);
             var userPermissions = PermissionCollection.Union(userPermissionRoles);
             return new PermissionCollection(userPermissions);
         }
 
         /// <summary>
-        ///  查询权限(管理员) 
+        ///  查询权限(超级管理员) 
+        /// <param name="type">系统类型</param>
         /// </summary>
-        private static PermissionCollection QueryPermissionOfCommonUser()
+        private static PermissionCollection QueryAllPermission(int type)
         {
-            var userPermissionRoles = MenuService.QueryMenus();
+            var userPermissionRoles = MenuService.QueryMenus(type);
             var userPermissions = PermissionCollection.Union(userPermissionRoles);
             return new PermissionCollection(userPermissions);
         }

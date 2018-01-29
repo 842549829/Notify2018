@@ -53,7 +53,7 @@ namespace Notify.Repository.Access
         /// 菜单查询(根据用户Id查询)
         /// </summary>
         /// <returns>结果</returns>
-        public IEnumerable<MMenu> QueryMenus(Guid accountId)
+        public IEnumerable<MMenu> QueryAccountMenus(Guid accountId)
         {
             this.ClearParameters();
             const string sql = "SELECT * FROM Menu WHERE Id IN(SELECT MenuId FROM RolePermissions WHERE RoleId IN(SELECT RoleId FROM RoleUserRelationship WHERE AccountId = @AccountId)) ORDER BY Sort;";
@@ -167,6 +167,26 @@ namespace Notify.Repository.Access
         /// <param name="childCallbacks">子对象委托</param>
         protected override void BuildChildCallbacks(Dictionary<string, AppendChildData> childCallbacks)
         {
+        }
+
+        public Guid QueryDefaultParentId(int type)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<MMenu> QueryMenus(int type)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<MMenu> QueryUserMenus(Guid userId, int type)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<MMenu> QueryUserDefaultMenus(Guid userId, int type)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -119,5 +119,24 @@ namespace Notify.MysqlDbFactory
         {
             return new RoleUserRelationshipRepository(unit, null);
         }
+
+        /// <summary>
+        /// 创建公司仓储
+        /// </summary>
+        /// <returns>公司仓储</returns>
+        public override ICompanyRepository CreateICompanyRepository()
+        {
+            return new CompanyRepository(null, DbString);
+        }
+
+        /// <summary>
+        /// 创建公司仓储
+        /// </summary>
+        /// <param name="unit">工作单元</param>
+        /// <returns>公司仓储</returns>
+        public override ICompanyRepository CreateICompanyRepository(IPowerUnitOfWork unit)
+        {
+            return new CompanyRepository(unit, null);
+        }
     }
 }
