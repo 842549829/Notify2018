@@ -883,6 +883,7 @@
     <Content Include="Views\Permission\PermissionMenu\PermissionMenuList.cshtml" />
     <Content Include="Views\Permission\PermissionRole\PermissionRoleList.cshtml" />
     <None Include="Properties\PublishProfiles\web.pubxml" />
+    <Content Include="Views\Account\Company\CompanyList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

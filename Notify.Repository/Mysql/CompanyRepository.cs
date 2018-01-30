@@ -7,6 +7,7 @@ using Notify.Infrastructure.EntityFactoryFramework;
 using Notify.Infrastructure.UnitOfWork;
 using Notify.IRepository;
 using Notify.Model.DB;
+using Notify.Model.Transfer;
 using Notify.Repository.Factory;
 
 namespace Notify.Repository.Mysql
@@ -78,6 +79,40 @@ namespace Notify.Repository.Mysql
             this.ClearParameters();
             this.AddParameter("@CompanyAccountNo", accountNo);
             return this.BuildEntityFromSql(sql);
+        }
+
+        /// <summary>
+        /// 公司分页查询
+        /// </summary>
+        /// <param name="condition">查询条件</param>
+        /// <returns>结果</returns>
+        public IEnumerable<MCompany> QueryCompanyByPagings(TCompanyCondition condition)
+        {
+            this.ClearParameters();
+            StringBuilder sqlCondition = new StringBuilder("ParenttCompanyId = @ParenttCompanyId");
+            this.AddParameter("@ParenttCompanyId", condition.ParenttCompanyId);
+            if (!string.IsNullOrWhiteSpace(condition.AccountNo))
+            {
+                sqlCondition.Append(" AND AccountNo = @AccountNo ");
+                this.AddParameter("@AccountNo", condition.AccountNo);
+            }
+            if (!string.IsNullOrWhiteSpace(condition.CompanyName))
+            {
+                sqlCondition.Append(" AND AccountName = @AccountName ");
+                this.AddParameter("@AccountName", condition.CompanyName);
+            }
+
+            if (condition.GetRowsCount)
+            {
+                string sqlCount = "SELECT COUNT(0) FROM Company WHERE  " + sqlCondition + ";";
+                object obj = this.ExecuteScalar(sqlCount);
+                condition.RowsCount = obj == null ? 0 : Convert.ToInt32(obj);
+            }
+
+            string sqlData = "SELECT * FROM Company WHERE " + sqlCondition + " ORDER BY CreateTime DESC LIMIT @StratRows, @PageSize;";
+            this.AddParameter("@StratRows", condition.StratRows);
+            this.AddParameter("@PageSize", condition.PageSize);
+            return this.BuildEntitiesFromSql(sqlData);
         }
 
         /// <summary>

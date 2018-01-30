@@ -58,6 +58,7 @@
     <Compile Include="Transfer\TAccount.cs" />
     <Compile Include="Transfer\TAccountCondition.cs" />
     <Compile Include="Transfer\TCompany.cs" />
+    <Compile Include="Transfer\TCompanyCondition.cs" />
     <Compile Include="Transfer\TMenu.cs" />
     <Compile Include="Transfer\TRole.cs" />
     <Compile Include="Transfer\TRoleCondition.cs" />

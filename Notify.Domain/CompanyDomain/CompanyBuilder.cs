@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Notify.Domain.AccountDomain;
 using Notify.Model.DB;
 using Notify.Model.Transfer;
@@ -58,55 +60,34 @@ namespace Notify.Domain.CompanyDomain
         /// <summary>
         /// 对象转化
         /// </summary>
-        /// <param name="account">Account</param>
-        /// <returns>TAccount</returns>
-        public static TAccount ToTAccount(this Account account)
+        /// <param name="company">MCompany</param>
+        /// <returns>TCompany</returns>
+        public static TCompany ToTCompany(this MCompany company)
         {
-            var tAccount = new TAccount
+            var tCompany = new TCompany
             {
-                Id = account.Key,
-                AccountName = account.AccountName,
-                AccountNo = account.AccountNO,
-                Mail = account.Mail,
-                Mobile = account.Mobile,
-                CreateTime = account.CreateTime
+                CompanyId = company.CompanyId,
+                CompanyAccountNo = company.CompanyAccountNo,
+                CompanyAddress = company.CompanyAddress,
+                CompanyName = company.CompanyName,
+                CompanyStatus = company.CompanyStatus,
+                ContactName = company.ContactName,
+                ContactPhone = company.ContactPhone,
+                ModifyTime = company.ModifyTime,
+                ParenttCompanyId = company.ParenttCompanyId,
+                CreateTime = company.CreateTime
             };
-            return tAccount;
+            return tCompany;
         }
 
         /// <summary>
         /// 对象转化
         /// </summary>
-        /// <param name="account">Account</param>
-        /// <returns>MAccount</returns>
-        public static MAccount ToMAccount(this Account account)
+        /// <param name="mCompany">mCompany</param>
+        /// <returns>TCompany</returns>
+        public static IEnumerable<TCompany> ToTCompanys(this IEnumerable<MCompany> mCompany)
         {
-            return new MAccount
-            {
-                Id = account.Key,
-                AccountName = account.AccountName,
-                AccountNo = account.AccountNO,
-                Mail = account.Mail,
-                Mobile = account.Mobile,
-                Password = account.Password,
-                PayPassword = account.PayPassword,
-                CreateTime = account.CreateTime,
-                IsAdmin = account.IsAdmin,
-                Status = account.Status
-            };
-        }
-
-        /// <summary>
-        /// 对象转化
-        /// </summary>
-        /// <param name="accountId">accountId</param>
-        /// <returns>MAccount</returns>
-        public static MAccount ToMAccount(this Guid accountId)
-        {
-            return new MAccount
-            {
-                Id = accountId
-            };
+            return mCompany.Select(ToTCompany);
         }
     }
 }

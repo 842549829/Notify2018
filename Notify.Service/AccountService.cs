@@ -164,30 +164,25 @@ namespace Notify.Service
         /// </summary>
         /// <param name="condition">查询条件</param>
         /// <returns>结果</returns>
-        public static EsayUIQueryResult<TAccount> QueryAccountByPaging(TAccountCondition condition)
-        {
-            using (var accountesRepository = DbContext.CreateIAccountesRepository())
-            {
-                var data = accountesRepository.QueryAccountByPaging(condition).ToTAccounts();
-                EsayUIQueryResult<TAccount> roles = new EsayUIQueryResult<TAccount>
-                {
-                    rows = data,
-                    total = condition.RowsCount
-                };
-                return roles;
-            }
-        }
-
-        /// <summary>
-        /// 用户分页查询
-        /// </summary>
-        /// <param name="condition">查询条件</param>
-        /// <returns>结果</returns>
         public static IEnumerable<TAccount> QueryAccountByPagings(TAccountCondition condition)
         {
             using (var accountesRepository = DbContext.CreateIAccountesRepository())
             {
                 var data = accountesRepository.QueryAccountByPaging(condition).ToTAccounts();
+                return data;
+            }
+        }
+
+        /// <summary>
+        /// 公司分页查询
+        /// </summary>
+        /// <param name="condition">查询条件</param>
+        /// <returns>结果</returns>
+        public static IEnumerable<TCompany> QueryCompanyByPagings(TCompanyCondition condition)
+        {
+            using (var companyRepository = DbContext.CreateICompanyRepository())
+            {
+                var data = companyRepository.QueryCompanyByPagings(condition).ToTCompanys();
                 return data;
             }
         }

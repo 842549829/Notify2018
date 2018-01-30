@@ -39,18 +39,6 @@ namespace Notify.Controller.Account
         }
 
         /// <summary>
-        /// 用户列表查询
-        /// </summary>
-        /// <param name="condition">查询条件</param>
-        /// <returns>结果</returns>
-        [AcceptVerbs("POST")]
-        public ActionResult UserListVal(TAccountCondition condition)
-        {
-            var data = AccountService.QueryAccountByPaging(condition);
-            return new MyJsonResult { Data = data };
-        }
-
-        /// <summary>
         /// 添加用户
         /// </summary>
         /// <param name="registerAccount">用户信息</param>
