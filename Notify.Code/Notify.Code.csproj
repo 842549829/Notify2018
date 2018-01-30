@@ -143,15 +143,6 @@
     <Compile Include="Utility\HttpRequestService.cs" />
     <Compile Include="Utility\HttpRequestUtility.cs" />
     <Compile Include="Utility\RequestQueue.cs" />
-    <Compile Include="WCF\ChannelFactoryCreator.cs" />
-    <Compile Include="WCF\CommonCommunication.cs" />
-    <Compile Include="WCF\CustomClientChannel-T-.cs" />
-    <Compile Include="WCF\CustomClientDuplexChannel-T-.cs" />
-    <Compile Include="WCF\DuplexChannelFactoryCreator.cs" />
-    <Compile Include="WCF\DuplexServiceProxyFactory.cs" />
-    <Compile Include="WCF\DuplexServiceRealProxy-T, TCallBack-.cs" />
-    <Compile Include="WCF\ServiceProxyFactory.cs" />
-    <Compile Include="WCF\ServiceRealProxy-T-.cs" />
     <Compile Include="Write\LogService.cs" />
     <Compile Include="Write\TextWriter.cs" />
   </ItemGroup>
