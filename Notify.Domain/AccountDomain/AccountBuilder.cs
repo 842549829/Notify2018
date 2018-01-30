@@ -94,7 +94,8 @@ namespace Notify.Domain.AccountDomain
                 PayPassword = account.PayPassword,
                 CreateTime = account.CreateTime,
                 IsAdmin = account.IsAdmin,
-                Status = account.Status
+                Status = account.Status,
+                CompanyId = account.CompanyId
             };
         }
 

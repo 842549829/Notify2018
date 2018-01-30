@@ -60,6 +60,47 @@ namespace Notify.Domain.CompanyDomain
         /// <summary>
         /// 对象转化
         /// </summary>
+        /// <param name="company">Company</param>
+        /// <returns>TCompany</returns>
+        public static MCompany ToMCompany(this TCompany company)
+        {
+            var tCompany = new MCompany
+            {
+                CompanyId = company.CompanyId,
+                CompanyAccountNo = company.CompanyAccountNo,
+                CompanyAddress = company.CompanyAddress ?? string.Empty,
+                CompanyName = company.CompanyName,
+                CompanyStatus = company.CompanyStatus,
+                ContactName = company.ContactName ?? string.Empty,
+                ContactPhone = company.ContactPhone ?? string.Empty,
+                ModifyTime = company.ModifyTime,
+                ParenttCompanyId = company.ParenttCompanyId,
+                CreateTime = company.CreateTime
+            };
+            return tCompany;
+        }
+
+        /// <summary>
+        /// 对象转化
+        /// </summary>
+        /// <param name="company">Company</param>
+        /// <returns>MAccount</returns>
+        public static RegisterAccount ToRegisterAccount(this MCompany company)
+        {
+            return new RegisterAccount
+            {
+                AccountName = company.CompanyName,
+                AccountNO = company.CompanyAccountNo,
+                Mail = company.CompanyAccountNo,
+                Mobile = company.ContactPhone,
+                Password = "123456",
+                PayPassword = "123456"
+            };
+        }
+
+        /// <summary>
+        /// 对象转化
+        /// </summary>
         /// <param name="company">MCompany</param>
         /// <returns>TCompany</returns>
         public static TCompany ToTCompany(this MCompany company)

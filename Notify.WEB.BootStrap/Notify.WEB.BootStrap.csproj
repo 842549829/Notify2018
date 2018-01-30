@@ -821,6 +821,7 @@
     <Content Include="Content\Scripts\tools\zTree_v3\js\jquery.ztree.exhide-3.5.js" />
     <Content Include="Content\Scripts\tools\zTree_v3\js\jquery.ztree.exhide-3.5.min.js" />
     <Content Include="Content\Scripts\tools\zTree_v3\log v3.x.txt" />
+    <Content Include="Content\Scripts\views\Account\Company\CompanyList.js" />
     <Content Include="Content\Scripts\views\Account\Unauthorized\Login.js" />
     <Content Include="Content\Scripts\views\Account\User\UserList.js" />
     <Content Include="Content\Scripts\views\Permission\Menu\MenuList.js" />

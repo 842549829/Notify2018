@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
 using Common.Code;
 using MvcPager;
 using Notify.Code.Code;
@@ -35,6 +36,22 @@ namespace Notify.Controller.Account
             {
                 return this.View();
             }
+        }
+
+        /// <summary>
+        /// 添加用户
+        /// </summary>
+        /// <param name="company">用户信息</param>
+        /// <returns>结果</returns>
+        [AcceptVerbs("POST")]
+        public ActionResult AddCompany(TCompany company)
+        {
+            company.ParenttCompanyId = Company.CompanyId;
+            company.CompanyId = Guid.NewGuid();
+            company.CreateTime = DateTime.Now;
+            company.ModifyTime = DateTime.Now;
+            var result = AccountService.AddCompany(company, null);
+            return new MyJsonResult { Data = result };
         }
     }
 }

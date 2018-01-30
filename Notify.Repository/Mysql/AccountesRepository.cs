@@ -89,7 +89,8 @@ namespace Notify.Repository.Mysql
             sql.Append("PayPassword,");
             sql.Append("CreateTime,");
             sql.Append("IsAdmin,");
-            sql.Append("Status");
+            sql.Append("Status,");
+            sql.Append("CompanyId");
             sql.Append(" ) VALUES ( ");
             sql.Append("@Id,");
             sql.Append("@AccountNO,");
@@ -100,7 +101,8 @@ namespace Notify.Repository.Mysql
             sql.Append("@PayPassword,");
             sql.Append("@CreateTime,");
             sql.Append("@IsAdmin,");
-            sql.Append("@Status");
+            sql.Append("@Status,");
+            sql.Append("@CompanyId");
             sql.Append(" ); ");
 
             this.AddParameter("@Id", entity.Key);
@@ -113,6 +115,7 @@ namespace Notify.Repository.Mysql
             this.AddParameter("@CreateTime", entity.CreateTime);
             this.AddParameter("@IsAdmin", entity.IsAdmin);
             this.AddParameter("@Status", entity.Status);
+            this.AddParameter("@CompanyId", entity.CompanyId);
 
             this.ExecuteNonQuery(sql.ToString());
         }

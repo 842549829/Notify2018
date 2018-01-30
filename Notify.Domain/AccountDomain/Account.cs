@@ -185,6 +185,15 @@ namespace Notify.Domain.AccountDomain
         }
 
         /// <summary>
+        /// 设置公司Id
+        /// </summary>
+        /// <param name="id">id</param>
+        public void SetCompanyId(Guid id)
+        {
+            this.CompanyId = id;
+        }
+
+        /// <summary>
         /// 验证注册信息
         /// </summary>
         public void ValidateRegister()

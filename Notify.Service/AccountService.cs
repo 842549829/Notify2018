@@ -230,6 +230,59 @@ namespace Notify.Service
         }
 
         /// <summary>
+        /// 添加公司
+        /// </summary>
+        /// <param name="company">公司信息</param>
+        /// <param name="operational">操作信息</param>
+        /// <returns>结果</returns>
+        public static Result AddCompany(TCompany company, Operational operational)
+        {
+            Result result = new Result();
+            try
+            {
+                // 将领域对象转化成数据库实体对象
+                var mCompany = company.ToMCompany();
+                var registerAccount = mCompany.ToRegisterAccount();
+                // 创建用户对象
+                var account = new Account(registerAccount);
+                account.AddUser();
+                account.SetCompanyId(mCompany.CompanyId);
+
+                // 将领域对象转化成数据库实体对象
+                var mAccount = account.ToMAccount();
+
+                // 通过工资单元持久化数据
+                using (var unit = DbContext.CreateIPowerUnitOfWork())
+                {
+                    var accountesRepository = DbContext.CreateIAccountesRepository(unit);
+                    var companyRepository = DbContext.CreateICompanyRepository(unit);
+
+                    accountesRepository.Add(mAccount);
+                    companyRepository.Add(mCompany);
+
+                    unit.Complete();
+                }
+
+                result.IsSucceed = true;
+                result.Message = "添加成功";
+            }
+            catch (CustomException ex)
+            {
+                result.IsSucceed = false;
+                result.Message = ex.Message;
+            }
+            catch (Exception ex)
+            {
+                result.IsSucceed = false;
+                result.Message = "添加失败";
+
+                // 记录异常日志
+                LogService.WriteLog(ex, "添加公司");
+            }
+            return result;
+        }
+
+        /// <summary>
         /// 修改用户
         /// </summary>
         /// <param name="tAccount">用户信息</param>
