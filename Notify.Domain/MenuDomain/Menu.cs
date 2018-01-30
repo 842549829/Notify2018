@@ -59,6 +59,11 @@ namespace Notify.Domain.MenuDomain
         public string Icon { get; set; }
 
         /// <summary>
+        /// 菜单类型
+        /// </summary>
+        public int MenuType { get; set; }
+
+        /// <summary>
         /// 子菜单集合
         /// </summary>
         public IEnumerable<SubMenu> Children => this.m_children.AsReadOnly();
@@ -93,7 +98,8 @@ namespace Notify.Domain.MenuDomain
                 ParentId = this.ParentId,
                 Sort = this.Sort,
                 Description = this.Description,
-                Icon = this.Icon
+                Icon = this.Icon,
+                MenuType = this.MenuType
             };
         }
 

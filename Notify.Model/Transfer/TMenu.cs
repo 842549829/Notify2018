@@ -41,5 +41,10 @@ namespace Notify.Model.Transfer
         /// 菜单图标
         /// </summary>
         public string MenuIcon { get; set; }
+
+        /// <summary>
+        /// 菜单类型
+        /// </summary>
+        public int MenuType { get; set; }
     }
 }

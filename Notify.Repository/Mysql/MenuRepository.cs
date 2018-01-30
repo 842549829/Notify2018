@@ -42,7 +42,8 @@ namespace Notify.Repository.Mysql
             sql.Append(" ParentId,");
             sql.Append(" Url,");
             sql.Append(" Sort,");
-            sql.Append(" Icon");
+            sql.Append(" Icon,");
+            sql.Append(" MenuType");
             sql.Append(" ) VALUES (");
             sql.Append(" @Id,");
             sql.Append(" @Title,");
@@ -50,7 +51,8 @@ namespace Notify.Repository.Mysql
             sql.Append(" @ParentId,");
             sql.Append(" @Url,");
             sql.Append(" @Sort,");
-            sql.Append(" @Icon");
+            sql.Append(" @Icon,");
+            sql.Append(" @MenuType");
             sql.Append(" ); ");
 
             this.AddParameter("@Id", entity.Id);
@@ -60,6 +62,7 @@ namespace Notify.Repository.Mysql
             this.AddParameter("@Url", entity.Url);
             this.AddParameter("@Sort", entity.Sort);
             this.AddParameter("@Icon", entity.Icon);
+            this.AddParameter("@MenuType", entity.MenuType);
 
             this.ExecuteNonQuery(sql.ToString());
         }

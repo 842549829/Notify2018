@@ -93,15 +93,17 @@
 
 $(document).ready(function () {
     initMenu();
-    $("#btnEditMenu").click(saveMenu);
+    $("#btnEditMenu").click(function() {
+        saveMenu(0);
+    });
     $("#btClearMenu").click(clearEdit);
 });
 
-function getMenuTree() {
+function getMenuTree(type) {
     var menuTree;
     $.ajaxExtend({
         async: false,
-        url: "/Menu/QueryMenuList",
+        url: "/Menu/QueryMenuList?type=" + type,
         success: function (d) {
             menuTree = d;
         }
@@ -110,7 +112,7 @@ function getMenuTree() {
 }
 
 function initMenu() {
-    $.fn.zTree.init($("#tree"), setting, getMenuTree());
+    $.fn.zTree.init($("#tree"), setting, getMenuTree(0));
 }
 
 function clearEdit() {
@@ -149,8 +151,9 @@ function validateMenu(menu) {
     return true;
 }
 
-function saveMenu() {
+function saveMenu(type) {
     var menu = new Object();
+    menu.MenuType = type;
     menu.ParentId = $("#hidParnetId").val();;
     menu.MenuName = $("#txtMenuName").val();
     menu.MenuUrl = $("#txtMenuUrl").val();

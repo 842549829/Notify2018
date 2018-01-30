@@ -44,6 +44,11 @@ namespace Notify.Model.DB
         public string Icon { get; set; }
 
         /// <summary>
+        /// 菜单类型
+        /// </summary>
+        public int MenuType { get; set; }
+
+        /// <summary>
         /// 主键Id
         /// </summary>
         public object Key => this.Id;

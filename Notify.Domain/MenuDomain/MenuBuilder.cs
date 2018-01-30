@@ -51,7 +51,8 @@ namespace Notify.Domain.MenuDomain
                 ParentId = mMenu.ParentId,
                 MenuName = mMenu.Title,
                 MenuUrl = mMenu.Url,
-                MenuIcon = mMenu.Icon
+                MenuIcon = mMenu.Icon,
+                MenuType = mMenu.MenuType
             };
         }
 
@@ -70,7 +71,8 @@ namespace Notify.Domain.MenuDomain
                 ParentId = tMenu.ParentId,
                 Title = tMenu.MenuName,
                 Url = tMenu.MenuUrl,
-                Icon = tMenu.MenuIcon
+                Icon = tMenu.MenuIcon,
+                MenuType = tMenu.MenuType
             };
         }
 
@@ -89,7 +91,8 @@ namespace Notify.Domain.MenuDomain
                 ParentId = tMenu.ParentId,
                 Title = tMenu.MenuName,
                 Url = tMenu.MenuUrl,
-                Icon = tMenu.MenuIcon
+                Icon = tMenu.MenuIcon,
+                MenuType = tMenu.MenuType
             };
         }
 
@@ -108,7 +111,8 @@ namespace Notify.Domain.MenuDomain
                 ParentId = mMenu.ParentId,
                 Title = mMenu.Title,
                 Url = mMenu.Url,
-                Icon = mMenu.Icon
+                Icon = mMenu.Icon,
+                MenuType = mMenu.MenuType
             };
         }
 
@@ -127,7 +131,8 @@ namespace Notify.Domain.MenuDomain
                 ParentId = menu.ParentId,
                 MenuName = menu.Title,
                 MenuUrl = menu.Url,
-                MenuIcon = menu.Icon
+                MenuIcon = menu.Icon,
+                MenuType = menu.MenuType
             };
         }
 
@@ -146,7 +151,8 @@ namespace Notify.Domain.MenuDomain
                 ParentId = menu.ParentId,
                 Title = menu.Title,
                 Url = menu.Url,
-                Icon = menu.Icon
+                Icon = menu.Icon,
+                MenuType = menu.MenuType
             };
         }
 
