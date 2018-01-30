@@ -75,6 +75,10 @@
       <Project>{66FBE572-2634-4209-A330-6D17BCBE5D75}</Project>
       <Name>Notify.Code</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Notify.Domain\Notify.Domain.csproj">
+      <Project>{1d822d76-7d6e-4d97-b14c-c8eb8da20c02}</Project>
+      <Name>Notify.Domain</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Notify.Model\Notify.Model.csproj">
       <Project>{519A8659-B7EA-4B39-8578-3800AC7CF575}</Project>
       <Name>Notify.Model</Name>

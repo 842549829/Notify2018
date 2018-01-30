@@ -31,6 +31,7 @@ namespace Notify.Domain.AccountDomain
                 CreateTime = mAccount.CreateTime,
                 IsAdmin = mAccount.IsAdmin,
                 Status = mAccount.Status,
+                CompanyId = mAccount.CompanyId
             };
             return account;
         }

@@ -34,7 +34,7 @@ namespace Notify.Controller.Account
         [AcceptVerbs("POST")]
         public ActionResult QueryMenu()
         {
-            var data = EsayUIMenu;
+            var data = Menu;
             return new MyJsonResult { Data = data };
         }
 

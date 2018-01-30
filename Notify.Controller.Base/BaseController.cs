@@ -4,7 +4,8 @@ using Notify.Code.Code;
 using Notify.Code.Constant;
 using Notify.Controller.Base.Filters;
 using Notify.Model.Transfer;
-using Notify.Service;
+using Notify.Domain.MenuDomain;
+using MenuService = Notify.Service.MenuService;
 
 namespace Notify.Controller.Base
 {
@@ -57,17 +58,22 @@ namespace Notify.Controller.Base
         }
 
         /// <summary>
-        /// 权限菜单(EsayUI)
+        /// EsayUIMenu
         /// </summary>
-        public static IEnumerable<EsayUIMenu> EsayUIMenu
+        public static IEnumerable<EsayUIMenu> EsayUIMenu => Menu.ToEsayUIMenus(0);
+
+        /// <summary>
+        /// 公司信息
+        /// </summary>
+        public static TCompany Company
         {
             get
             {
-                if (System.Web.HttpContext.Current.Session == null || System.Web.HttpContext.Current.Session[Const.EsayUIMenuSessionKey] == null)
+                if (System.Web.HttpContext.Current.Session == null || System.Web.HttpContext.Current.Session[Const.CompanySessionKey] == null)
                 {
                     return null;
                 }
-                return System.Web.HttpContext.Current.Session[Const.EsayUIMenuSessionKey] as IEnumerable<EsayUIMenu>;
+                return System.Web.HttpContext.Current.Session[Const.CompanySessionKey] as TCompany;
             }
         }
 

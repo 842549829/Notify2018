@@ -29,7 +29,8 @@ namespace Notify.Repository.Factory
                 Mobile = reader["Mobile"].ToString(),
                 Password = reader["Password"].ToString(),
                 PayPassword = reader["PayPassword"].ToString(),
-                Status = (Model.AccountStatus)(Convert.ToUInt32(reader["Status"]))
+                Status = (Model.AccountStatus)(Convert.ToUInt32(reader["Status"])),
+                CompanyId = Guid.Parse(reader["CompanyId"].ToString())
             };
 
         }

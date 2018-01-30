@@ -141,7 +141,7 @@ namespace Notify.Domain.AccountDomain
         public LoginResult Login(string password, int type)
         {
             this.ValidateLogin(password);
-            LoginResult result = new LoginResult();
+            LoginResult result = new LoginResult { Result = new Code.Code.Result() };
             var permissionCollection = PermissionService.QueryPermissionOfUser(this, type);
             result.Account = this.ToTAccount();
             result.Company = this.Company.Value.ToTCompany();

@@ -11,26 +11,26 @@ namespace Notify.Model.Transfer
         /// <summary>
         /// 菜单Id
         /// </summary>
-        public Guid menuid { get; set; }
+        public Guid MenuId { get; set; }
 
         /// <summary>
         /// 菜单名称
         /// </summary>
-        public string menuname { get; set; }
+        public string MenuName { get; set; }
 
         /// <summary>
         /// 菜单图标
         /// </summary>
-        public string icon { get; set; }
+        public string Icon { get; set; }
 
         /// <summary>
         /// url
         /// </summary>
-        public string url { get; set; }
+        public string Url { get; set; }
 
         /// <summary>
         /// 子菜单
         /// </summary>
-        public IEnumerable<EsayUIMenu> menus { get; set; }
+        public IEnumerable<EsayUIMenu> Menus { get; set; }
     }
 }

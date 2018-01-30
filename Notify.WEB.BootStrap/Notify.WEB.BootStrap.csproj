@@ -911,10 +911,6 @@
       <Project>{9567f431-7155-45f5-9aec-721fec6ec9d1}</Project>
       <Name>Notify.Controller.Permission</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Notify.Controller.SwfupLoad\Notify.Controller.SwfupLoad.csproj">
-      <Project>{b61cd89b-05ef-475f-aa22-45ee94cde563}</Project>
-      <Name>Notify.Controller.SwfupLoad</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Notify.IDbFactory\Notify.IDbFactory.csproj">
       <Project>{4cd99fdf-59eb-4dfa-aa9a-cebdc572ac3f}</Project>
       <Name>Notify.IDbFactory</Name>

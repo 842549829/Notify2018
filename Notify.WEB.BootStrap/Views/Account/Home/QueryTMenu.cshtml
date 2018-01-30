@@ -40,14 +40,14 @@
         <li>
             <a href="#">
                 <i class="fa fa-home"></i>
-                <span class="nav-label">@item.menuname</span>
+                <span class="nav-label">@item.MenuName</span>
                 <span class="fa arrow"></span>
             </a>
             <ul class="nav nav-second-level">
-                @foreach (var child in item.menus)
+                @foreach (var child in item.Menus)
                 {
                     <li>
-                        <a class="J_menuItem" href="@child.url" data-index="0">@child.menuname</a>
+                        <a class="J_menuItem" href="@child.Url" data-index="0">@child.MenuName</a>
                     </li>
                 }
             </ul>

@@ -172,10 +172,10 @@ namespace Notify.Domain.MenuDomain
         {
             return new EsayUIMenu
             {
-                menuid = mMenu.Id,
-                icon = mMenu.Icon,
-                menuname = mMenu.Title,
-                url = mMenu.Url
+                MenuId = mMenu.Id,
+                Icon = mMenu.Icon,
+                MenuName = mMenu.Title,
+                Url = mMenu.Url
             };
         }
 
@@ -217,6 +217,60 @@ namespace Notify.Domain.MenuDomain
         public static IEnumerable<MMenu> ToMMenus(this IEnumerable<Menu> menu)
         {
             return menu.Select(ToMMenu);
+        }
+
+        /// <summary>
+        /// 对象转化
+        /// </summary>
+        /// <param name="menus">MMenu</param>
+        /// <param name="type">菜单类型</param>
+        /// <returns>EsayUIMenu</returns>
+        public static IEnumerable<EsayUIMenu> ToEsayUIMenus(this IEnumerable<TMenu> menus, int type)
+        {
+            var mMenus = menus as TMenu[] ?? menus.ToArray();
+            var drList = mMenus.Where(item => item.ParentId == Guid.Empty).Select(item => item.Id);
+            var enumerable = drList as Guid[] ?? drList.ToArray();
+            var drData = enumerable.Any() ? mMenus.Where(item => enumerable.Contains(item.ParentId)) : mMenus.Where(item => item.ParentId == MenuService.QueryDefaultParentId(type));
+            List<EsayUIMenu> rootNode = new List<EsayUIMenu>();
+            foreach (var item in drData)
+            {
+                EsayUIMenu esayUIMenu = new EsayUIMenu
+                {
+                    MenuId = item.Id,
+                    MenuName = item.MenuName,
+                    Icon = item.MenuIcon,
+                    Url = item.MenuUrl
+                };
+                esayUIMenu.Menus = CreateChildTree(mMenus, esayUIMenu);
+                rootNode.Add(esayUIMenu);
+            }
+            return rootNode;
+        }
+
+        /// <summary>
+        /// 递归菜单
+        /// </summary>
+        /// <param name="menus">菜单集合</param>
+        /// <param name="menu">父级菜单</param>
+        /// <returns>结果</returns>
+        private static IEnumerable<EsayUIMenu> CreateChildTree(IEnumerable<TMenu> menus, EsayUIMenu menu)
+        {
+            List<EsayUIMenu> nodeList = new List<EsayUIMenu>();
+            var mMenus = menus as TMenu[] ?? menus.ToArray();
+            var children = mMenus.Where(item => item.ParentId == menu.MenuId);
+            foreach (var item in children)
+            {
+                EsayUIMenu node = new EsayUIMenu
+                {
+                    MenuId = item.Id,
+                    MenuName = item.MenuName,
+                    Icon = item.MenuIcon,
+                    Url = item.MenuUrl
+                };
+                node.Menus = CreateChildTree(mMenus, node);
+                nodeList.Add(node);
+            }
+            return nodeList;
         }
     }
 }
