@@ -136,4 +136,33 @@ namespace Notify.Controller.Permission
             return result;
         }
     }
+
+    /// <summary>
+    /// 员工角色
+    /// </summary>
+    public class EmployeesRole : RoleController
+    {
+        /// <summary>
+        /// 角色列表
+        /// </summary>
+        /// <returns>视图</returns>
+        public ActionResult EmployeesRoleList(TRoleCondition condition)
+        {
+            if (condition != null)
+            {
+                IEnumerable<TRole> data = RoleService.QueryRolesByPagings(condition);
+                PagedList<TRole> pageList = new PagedList<TRole>(data, condition.PageIndex, condition.PageSize, condition.RowsCount);
+                ViewModel<TRoleCondition, PagedList<TRole>> result = new ViewModel<TRoleCondition, PagedList<TRole>>
+                {
+                    Condition = condition,
+                    Data = pageList
+                };
+                return this.View(result);
+            }
+            else
+            {
+                return this.View();
+            }
+        }
+    }
 }

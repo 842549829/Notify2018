@@ -16,5 +16,10 @@ namespace Notify.Model.Transfer
         /// 角色描述
         /// </summary>
         public string RoleDescription { get; set; }
+
+        /// <summary>
+        /// 角色类型
+        /// </summary>
+        public int RoleType { get; set; }
     }
 }

@@ -45,7 +45,8 @@ namespace Notify.Repository.Mysql
         public IEnumerable<MRole> QueryRolesByPaging(TRoleCondition condition)
         {
             this.ClearParameters();
-            StringBuilder sqlCondition = new StringBuilder();
+            StringBuilder sqlCondition = new StringBuilder("RoleType = @RoleType");
+            this.AddParameter("@RoleType", condition.RoleType);
             if (!string.IsNullOrWhiteSpace(condition.RoleName))
             {
                 sqlCondition.Append(" AND RoleName = @RoleName ");
@@ -59,12 +60,12 @@ namespace Notify.Repository.Mysql
 
             if (condition.GetRowsCount)
             {
-                string sqlCount = "SELECT COUNT(0) FROM Role WHERE 1 = 1 " + sqlCondition + ";";
+                string sqlCount = "SELECT COUNT(0) FROM Role WHERE  " + sqlCondition + ";";
                 object obj = this.ExecuteScalar(sqlCount);
                 condition.RowsCount = obj == null ? 0 : Convert.ToInt32(obj);
             }
 
-            string sqlData = "SELECT * FROM Role WHERE 1 = 1 " + sqlCondition + " ORDER BY Id DESC LIMIT @StratRows, @PageSize;";
+            string sqlData = "SELECT * FROM Role WHERE " + sqlCondition + " ORDER BY Id DESC LIMIT @StratRows, @PageSize;";
             this.AddParameter("@StratRows", condition.StratRows);
             this.AddParameter("@PageSize", condition.PageSize);
             return this.BuildEntitiesFromSql(sqlData);
